@@ -6,9 +6,19 @@ seen_disquette = []
 
 def get_disquette():
     alea = random.randint(1,1000)
-    page    = requests.get(f"http://www.jokes4us.com/pickuplines/random/pickupline{alea}.html")
-    soup = BeautifulSoup(page.text,'html.parser')
-    return soup.find_all("font", size="5")[0].string.extract()
+    try :
+        page    = requests.get(f"http://www.jokes4us.com/pickuplines/random/pickupline{alea}.html")
+        soup = BeautifulSoup(page.text,'html.parser')
+    except :
+        print("Error while reaching www.jokes4us.com")
+        return ""
+    try :
+        disk = soup.find_all("font", size="5")[0].string.extract()
+    except :
+        print("Error while reaching the disquette")
+        return ""
+    
+    return disk
 
 def get_unique_disquette():
     disk = get_disquette()
